@@ -1,0 +1,23 @@
+name: Deploy Blog to Hostinger
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'blog/**'
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy blog folder to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./blog/
+          server-dir: /public_html/Blog/
