@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths:
       - 'blog/**'
+      - 'sitemap/**'
 
 jobs:
   ftp-deploy:
@@ -23,3 +24,14 @@ jobs:
           port: 21
           local-dir: ./blog/
           server-dir: /public_html/Blog/
+
+      - name: FTP Deploy sitemap to Hostinger root
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./sitemap/
+          server-dir: /public_html/
